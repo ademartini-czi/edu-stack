@@ -10,6 +10,10 @@ import {
 } from '@remix-run/react';
 
 import {getUser} from './session.server';
+
+// tailwind.css is generated as part of the build process, and won't exist if the app has never
+// been ran. Ignore the lint error if it's missing, so we can lint before running the build.
+// eslint-disable-next-line import/no-unresolved
 import tailwindStylesheetUrl from './styles/tailwind.css';
 
 export const links: LinksFunction = () => {
