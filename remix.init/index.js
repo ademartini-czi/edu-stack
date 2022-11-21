@@ -7,39 +7,15 @@ const PackageJson = require('@npmcli/package-json');
 const semver = require('semver');
 const YAML = require('yaml');
 
-const cleanupCypressFiles = ({fileEntries, isTypeScript, packageManager}) =>
+const cleanupCypressFiles = ({fileEntries, packageManager}) =>
   fileEntries.flatMap(([filePath, content]) => {
-    let newContent = content.replace(
+    const newContent = content.replace(
       new RegExp('npx ts-node', 'g'),
-      isTypeScript ? `${packageManager.exec} ts-node` : 'node',
+      `${packageManager.exec} ts-node`,
     );
-
-    if (!isTypeScript) {
-      newContent = newContent
-        .replace(new RegExp('create-user.ts', 'g'), 'create-user.js')
-        .replace(new RegExp('delete-user.ts', 'g'), 'delete-user.js');
-    }
 
     return [fs.writeFile(filePath, newContent)];
   });
-
-const cleanupDeployWorkflow = (deployWorkflow, deployWorkflowPath) => {
-  delete deployWorkflow.jobs.typecheck;
-  deployWorkflow.jobs.deploy.needs = deployWorkflow.jobs.deploy.needs.filter(
-    (need) => need !== 'typecheck',
-  );
-
-  return [fs.writeFile(deployWorkflowPath, YAML.stringify(deployWorkflow))];
-};
-
-const cleanupVitestConfig = (vitestConfig, vitestConfigPath) => {
-  const newVitestConfig = vitestConfig.replace(
-    'setup-test-env.ts',
-    'setup-test-env.js',
-  );
-
-  return [fs.writeFile(vitestConfigPath, newVitestConfig)];
-};
 
 const escapeRegExp = (string) =>
   // $& means the whole matched string
@@ -80,51 +56,27 @@ const getPackageManagerVersion = (packageManager) =>
 
 const getRandomString = (length) => crypto.randomBytes(length).toString('hex');
 
-const readFileIfNotTypeScript = (
-  isTypeScript,
-  filePath,
-  parseFunction = (result) => result,
-) =>
-  isTypeScript
-    ? Promise.resolve()
-    : fs.readFile(filePath, 'utf-8').then(parseFunction);
-
-const removeUnusedDependencies = (dependencies, unusedDependencies) =>
-  Object.fromEntries(
-    Object.entries(dependencies).filter(
-      ([key]) => !unusedDependencies.includes(key),
-    ),
-  );
-
-const updatePackageJson = ({APP_NAME, isTypeScript, packageJson}) => {
+const updatePackageJson = ({APP_NAME, packageJson}) => {
   const {
-    devDependencies,
     prisma: {seed: prismaSeed, ...prisma},
     scripts: {typecheck, validate, ...scripts},
   } = packageJson.content;
 
   packageJson.update({
     name: APP_NAME,
-    devDependencies: isTypeScript
-      ? devDependencies
-      : removeUnusedDependencies(devDependencies, ['ts-node']),
-    prisma: isTypeScript
-      ? {...prisma, seed: prismaSeed}
-      : {
-          ...prisma,
-          seed: prismaSeed
-            .replace('ts-node', 'node')
-            .replace('seed.ts', 'seed.js'),
-        },
-    scripts: isTypeScript
-      ? {...scripts, typecheck, validate}
-      : {...scripts, validate: validate.replace(' typecheck', '')},
+    prisma: {...prisma, seed: prismaSeed},
+    scripts: {...scripts, typecheck, validate},
   });
 };
 
 const main = async ({isTypeScript, packageManager, rootDirectory}) => {
+  if (!isTypeScript) {
+    console.warn(
+      "I see you've asked for TypeScript to be removed from the project 🧐. That option is not supported, and the project will still be generated with TypeScript.",
+    );
+  }
+
   const pm = getPackageManagerCommand(packageManager);
-  const FILE_EXTENSION = isTypeScript ? 'ts' : 'js';
 
   const README_PATH = path.join(rootDirectory, 'README.md');
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, '.env.example');
@@ -137,21 +89,14 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
   );
   const DOCKERFILE_PATH = path.join(rootDirectory, 'Dockerfile');
   const CYPRESS_SUPPORT_PATH = path.join(rootDirectory, 'cypress', 'support');
-  const CYPRESS_COMMANDS_PATH = path.join(
-    CYPRESS_SUPPORT_PATH,
-    `commands.${FILE_EXTENSION}`,
-  );
+  const CYPRESS_COMMANDS_PATH = path.join(CYPRESS_SUPPORT_PATH, 'commands.ts');
   const CREATE_USER_COMMAND_PATH = path.join(
     CYPRESS_SUPPORT_PATH,
-    `create-user.${FILE_EXTENSION}`,
+    'create-user.ts',
   );
   const DELETE_USER_COMMAND_PATH = path.join(
     CYPRESS_SUPPORT_PATH,
-    `delete-user.${FILE_EXTENSION}`,
-  );
-  const VITEST_CONFIG_PATH = path.join(
-    rootDirectory,
-    `vitest.config.${FILE_EXTENSION}`,
+    'delete-user.ts',
   );
 
   const REPLACER = 'blues-stack-template';
@@ -170,8 +115,8 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     cypressCommands,
     createUserCommand,
     deleteUserCommand,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     deployWorkflow,
-    vitestConfig,
     packageJson,
   ] = await Promise.all([
     fs.readFile(README_PATH, 'utf-8'),
@@ -180,10 +125,7 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     fs.readFile(CYPRESS_COMMANDS_PATH, 'utf-8'),
     fs.readFile(CREATE_USER_COMMAND_PATH, 'utf-8'),
     fs.readFile(DELETE_USER_COMMAND_PATH, 'utf-8'),
-    readFileIfNotTypeScript(isTypeScript, DEPLOY_WORKFLOW_PATH, (s) =>
-      YAML.parse(s),
-    ),
-    readFileIfNotTypeScript(isTypeScript, VITEST_CONFIG_PATH),
+    fs.readFile(DEPLOY_WORKFLOW_PATH, 'utf-8').then(YAML.parse),
     PackageJson.load(rootDirectory),
   ]);
 
@@ -204,7 +146,7 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
       )
     : dockerfile;
 
-  updatePackageJson({APP_NAME, isTypeScript, packageJson});
+  updatePackageJson({APP_NAME, packageJson});
 
   const fileOperationPromises = [
     fs.writeFile(README_PATH, newReadme),
@@ -216,7 +158,6 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
         [CREATE_USER_COMMAND_PATH, createUserCommand],
         [DELETE_USER_COMMAND_PATH, deleteUserCommand],
       ],
-      isTypeScript,
       packageManager: pm,
     }),
     packageJson.save(),
@@ -234,16 +175,6 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     fs.rm(path.join(rootDirectory, '.github', 'dependabot.yml')),
     fs.rm(path.join(rootDirectory, '.github', 'PULL_REQUEST_TEMPLATE.md')),
   ];
-
-  if (!isTypeScript) {
-    fileOperationPromises.push(
-      ...cleanupDeployWorkflow(deployWorkflow, DEPLOY_WORKFLOW_PATH),
-    );
-
-    fileOperationPromises.push(
-      ...cleanupVitestConfig(vitestConfig, VITEST_CONFIG_PATH),
-    );
-  }
 
   await Promise.all(fileOperationPromises);
 
