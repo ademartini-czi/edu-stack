@@ -28,8 +28,6 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
 
       - name: 👖 Lint
         run: npm run lint
@@ -51,8 +49,6 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
 
       - name: 🔎 Type check
         run: npm run typecheck --if-present
@@ -74,8 +70,6 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
 
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
@@ -100,8 +94,6 @@ jobs:
 
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
 
       - name: 🐳 Docker compose
         # the sleep is just there to give time for postgres to get started

@@ -174,6 +174,10 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     }),
     fs.rm(path.join(rootDirectory, '.github', 'dependabot.yml')),
     fs.rm(path.join(rootDirectory, '.github', 'PULL_REQUEST_TEMPLATE.md')),
+
+    // Remove the stack repo's lock file, so that the generated project will generate its own.
+    fs.rm(path.join(rootDirectory, 'package-lock.json'), {force: true}),
+    fs.rm(path.join(rootDirectory, 'yarn.lock'), {force: true}),
   ];
 
   await Promise.all(fileOperationPromises);
