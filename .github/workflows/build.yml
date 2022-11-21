@@ -12,16 +12,16 @@ permissions:
 
 jobs:
   lint:
-    name: ⬣ ESLint
+    name: 👖 ESLint
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
+      - name: ⛔ Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
-      - name: ⎔ Setup node
+      - name: 😻 Setup node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
@@ -31,20 +31,20 @@ jobs:
         with:
           useLockFile: false
 
-      - name: 🔬 Lint
+      - name: 👖 Lint
         run: npm run lint
 
   typecheck:
-    name: ʦ TypeScript
+    name: 🔎 TypeScript
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
+      - name: ⛔ Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
-      - name: ⎔ Setup node
+      - name: 😻 Setup node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
@@ -61,13 +61,13 @@ jobs:
     name: ⚡ Vitest
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
+      - name: ⛔ Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
-      - name: ⎔ Setup node
+      - name: 😻 Setup node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
@@ -81,10 +81,10 @@ jobs:
         run: npm run test -- --coverage
 
   cypress:
-    name: ⚫️ Cypress
+    name: 🌳 Cypress
     runs-on: ubuntu-latest
     steps:
-      - name: 🛑 Cancel Previous Runs
+      - name: ⛔ Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
@@ -93,7 +93,7 @@ jobs:
       - name: 🏄 Copy test env vars
         run: cp .env.example .env
 
-      - name: ⎔ Setup node
+      - name: 😻 Setup node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
@@ -112,7 +112,7 @@ jobs:
       - name: 🛠 Setup Database
         run: npx prisma migrate reset --force
 
-      - name: ⚙️ Build
+      - name: 🏗️ Build
         run: npm run build
 
       - name: 🌳 Cypress run
