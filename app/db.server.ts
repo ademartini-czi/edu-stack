@@ -4,6 +4,7 @@ import invariant from 'tiny-invariant';
 let prisma: PrismaClient;
 
 declare global {
+  // eslint-disable-next-line
   var __db__: PrismaClient;
 }
 
