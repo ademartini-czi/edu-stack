@@ -224,6 +224,10 @@ const main = async ({ isTypeScript, packageManager, rootDirectory }) => {
       path.join(rootDirectory, "remix.init", "gitignore"),
       path.join(rootDirectory, ".gitignore")
     ),
+    fs.copyFile(
+      path.join(rootDirectory, "remix.init", "pull_request_template.md"),
+      path.join(rootDirectory, ".github/pull_request_template.md")
+    ),
     fs.rm(path.join(rootDirectory, ".github", "ISSUE_TEMPLATE"), {
       recursive: true,
     }),
