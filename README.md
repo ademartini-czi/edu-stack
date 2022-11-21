@@ -71,7 +71,7 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
 - Start dev server:
 
   ```sh
-  npm run dev
+  npm start
   ```
 
 This starts your app in development mode, rebuilding assets on file changes.
