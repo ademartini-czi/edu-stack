@@ -28,6 +28,12 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
 
 ## Development
 
+- Install the required Node version
+
+  ```sh
+  nodenv install
+  ```
+
 - Install dependencies
 
   ```sh
