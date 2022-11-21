@@ -80,3 +80,18 @@ The database seed script creates a new user with some data you can use to get st
 
 - Email: `rachel@remix.run`
 - Password: `racheliscool`
+
+## Managing the database
+
+Ccreating, seeding, migrating, etc., is similar Rails.
+
+Use the Prisma CLI commands at https://www.prisma.io/docs/reference/api-reference/command-reference.
+
+For example, some common operations are:
+
+| Goal | Command(s) |
+| ---- | ---------- |
+| Apply pending migrations | `npx prisma migrate dev` |
+| Add a new model | Modify prisma/schema.prisma and run `npx prisma migrate dev` |
+| Explore the db | `npx prisma studio` |
+| Make the db reflect your current schema | `npx prisma db push` |
