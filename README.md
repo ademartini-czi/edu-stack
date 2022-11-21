@@ -8,6 +8,13 @@ Learn more about [Remix Stacks](https://remix.run/stacks).
 npx create-remix@latest --template chanzuckerberg/edu-stack
 ```
 
+## Table of contents
+
+- [What's in the stack](#what-s-in-the-stack)
+- [Requirements](#requirements)
+- [Development](#development)
+- [Managing the database](#managing-the-database)
+
 ## What's in the stack
 
 - [GitHub Actions](https://github.com/features/actions) for deploy on merge to production and staging environments
