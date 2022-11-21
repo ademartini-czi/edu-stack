@@ -5,7 +5,6 @@
   "license": "MIT",
   "dependencies": {
     "@npmcli/package-json": "^2.0.0",
-    "semver": "^7.3.7",
     "yaml": "^2.1.1"
   }
 }
