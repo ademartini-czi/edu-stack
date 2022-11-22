@@ -16,7 +16,6 @@ module.exports = {
   extends: [
     '@chanzuckerberg/eslint-config-edu-js',
     '@chanzuckerberg/eslint-config-edu-ts',
-    '@remix-run/eslint-config/jest-testing-library',
     'plugin:@chanzuckerberg/eslint-plugin-edu-react/recommended',
     'plugin:prettier/recommended',
   ],
@@ -26,13 +25,17 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/routes/**/*.js?(x)', '**/routes/**/*.tsx'],
+      files: ['**/routes/**/*.{js,jsx,ts,tsx}'],
       rules: {
         // Routes may use default exports without a name. At the route level
         // identifying components for debugging purposes is less of an issue, as
         // the route boundary is more easily identifiable.
         'react/display-name': 'off',
       },
+    },
+    {
+      files: ['app/**/*.{spec,test}.{js,jsx,ts,tsx}'],
+      extends: ['@remix-run/eslint-config/jest-testing-library'],
     },
   ],
 };
