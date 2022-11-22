@@ -3,7 +3,6 @@ module.exports = {
   env: {
     node: true,
     es6: true,
-    'cypress/globals': true,
   },
   // We're using vitest which has a very similar API to jest
   // (so the linting plugins work nicely), but we have to
@@ -13,7 +12,7 @@ module.exports = {
       version: 28,
     },
   },
-  plugins: ['@chanzuckerberg/eslint-plugin-edu-react', 'cypress', 'prettier'],
+  plugins: ['@chanzuckerberg/eslint-plugin-edu-react', 'prettier'],
   extends: [
     '@chanzuckerberg/eslint-config-edu-js',
     '@chanzuckerberg/eslint-config-edu-ts',

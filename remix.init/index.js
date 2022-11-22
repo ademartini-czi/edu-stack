@@ -6,16 +6,6 @@ const path = require('path');
 const PackageJson = require('@npmcli/package-json');
 const YAML = require('yaml');
 
-const cleanupCypressFiles = ({fileEntries, packageManager}) =>
-  fileEntries.flatMap(([filePath, content]) => {
-    const newContent = content.replace(
-      new RegExp('npx ts-node', 'g'),
-      `${packageManager.exec} ts-node`,
-    );
-
-    return [fs.writeFile(filePath, newContent)];
-  });
-
 const escapeRegExp = (string) =>
   // $& means the whole matched string
   string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -72,16 +62,6 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     'deploy.yml',
   );
   const DOCKERFILE_PATH = path.join(rootDirectory, 'Dockerfile');
-  const CYPRESS_SUPPORT_PATH = path.join(rootDirectory, 'cypress', 'support');
-  const CYPRESS_COMMANDS_PATH = path.join(CYPRESS_SUPPORT_PATH, 'commands.ts');
-  const CREATE_USER_COMMAND_PATH = path.join(
-    CYPRESS_SUPPORT_PATH,
-    'create-user.ts',
-  );
-  const DELETE_USER_COMMAND_PATH = path.join(
-    CYPRESS_SUPPORT_PATH,
-    'delete-user.ts',
-  );
 
   const REPLACER = 'blues-stack-template';
 
@@ -96,9 +76,6 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     readme,
     env,
     dockerfile,
-    cypressCommands,
-    createUserCommand,
-    deleteUserCommand,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     deployWorkflow,
     packageJson,
@@ -106,9 +83,6 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     fs.readFile(README_PATH, 'utf-8'),
     fs.readFile(EXAMPLE_ENV_PATH, 'utf-8'),
     fs.readFile(DOCKERFILE_PATH, 'utf-8'),
-    fs.readFile(CYPRESS_COMMANDS_PATH, 'utf-8'),
-    fs.readFile(CREATE_USER_COMMAND_PATH, 'utf-8'),
-    fs.readFile(DELETE_USER_COMMAND_PATH, 'utf-8'),
     fs.readFile(DEPLOY_WORKFLOW_PATH, 'utf-8').then(YAML.parse),
     PackageJson.load(rootDirectory),
   ]);
@@ -136,14 +110,6 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     fs.writeFile(README_PATH, newReadme),
     fs.writeFile(ENV_PATH, newEnv),
     fs.writeFile(DOCKERFILE_PATH, newDockerfile),
-    ...cleanupCypressFiles({
-      fileEntries: [
-        [CYPRESS_COMMANDS_PATH, cypressCommands],
-        [CREATE_USER_COMMAND_PATH, createUserCommand],
-        [DELETE_USER_COMMAND_PATH, deleteUserCommand],
-      ],
-      packageManager: pm,
-    }),
     packageJson.save(),
     fs.copyFile(
       path.join(rootDirectory, 'remix.init', 'gitignore'),

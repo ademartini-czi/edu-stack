@@ -21,7 +21,7 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
 - Email/Password Authentication with [cookie-based sessions](https://remix.run/docs/en/v1/api/remix#createcookiesessionstorage)
 - Database ORM with [Prisma](https://prisma.io)
 - Styling with [Tailwind](https://tailwindcss.com/)
-- End-to-end testing with [Cypress](https://cypress.io)
+- End-to-end testing with [Playwright](https://playwright.dev)
 - Local third party request mocking with [MSW](https://mswjs.io)
 - Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
 - Code formatting with [Prettier](https://prettier.io)

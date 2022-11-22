@@ -74,8 +74,8 @@ jobs:
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
 
-  cypress:
-    name: 🌳 Cypress
+  playwright:
+    name: 🤩 Playwright
     runs-on: ubuntu-latest
     steps:
       - name: ⛔ Cancel Previous Runs
@@ -107,10 +107,5 @@ jobs:
       - name: 🏗️ Build
         run: npm run build
 
-      - name: 🌳 Cypress run
-        uses: cypress-io/github-action@v4
-        with:
-          start: npm run start:mocks
-          wait-on: "http://localhost:8811"
-        env:
-          PORT: "8811"
+      - name: 🤩 Playwright run
+        run: npm run test:e2e
