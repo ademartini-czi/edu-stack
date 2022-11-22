@@ -37,7 +37,7 @@ jobs:
       - name: 👖 Lint
         run: npm run lint
 
-  typecheck:
+  types:
     name: 🔎 TypeScript
     runs-on: ubuntu-latest
     steps:
@@ -56,7 +56,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: 🔎 Type check
-        run: npm run typecheck --if-present
+        run: npm run types
 
   vitest:
     name: ⚡ Vitest

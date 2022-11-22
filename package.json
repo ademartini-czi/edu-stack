@@ -22,8 +22,8 @@
     "start:mocks": "cross-env NODE_ENV=production node --require ./mocks --require dotenv/config ./build/server.js",
     "test": "vitest",
     "test:e2e": "npx playwright test",
-    "typecheck": "tsc --noEmit",
-    "validate": "run-p \"test -- --run\" lint typecheck"
+    "types": "tsc --noEmit",
+    "validate": "run-p \"test -- --run\" lint types"
   },
   "prettier": "@chanzuckerberg/prettier-config-edu",
   "eslintIgnore": [

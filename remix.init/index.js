@@ -33,13 +33,13 @@ const getRandomString = (length) => crypto.randomBytes(length).toString('hex');
 const updatePackageJson = ({APP_NAME, packageJson}) => {
   const {
     prisma: {seed: prismaSeed, ...prisma},
-    scripts: {typecheck, validate, ...scripts},
+    scripts: {types, validate, ...scripts},
   } = packageJson.content;
 
   packageJson.update({
     name: APP_NAME,
     prisma: {...prisma, seed: prismaSeed},
-    scripts: {...scripts, typecheck, validate},
+    scripts: {...scripts, types, validate},
   });
 };
 
