@@ -29,6 +29,11 @@ jobs:
       - name: 📥 Download deps
         uses: bahmutov/npm-install@v1
 
+      # Need to run the build before linting because root.tsx references the generated Tailwind
+      # stylesheet.
+      - name: 🏗️ Build
+        run: npm run build
+
       - name: 👖 Lint
         run: npm run lint
 
