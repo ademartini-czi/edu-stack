@@ -18,10 +18,11 @@
     "prod": "cross-env NODE_ENV=production node ./build/server.js",
     "routes": "remix routes",
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
+    "setup:e2e": "cross-env DATABASE_URL=postgresql://${USER}:postgres@localhost:5432/test npx prisma migrate reset --force",
     "start": "run-p dev:*",
     "start:mocks": "cross-env NODE_ENV=production node --require ./mocks --require dotenv/config ./build/server.js",
     "test": "vitest",
-    "test:e2e": "npx playwright test",
+    "test:e2e": "npm run setup:e2e && cross-env DATABASE_URL=postgresql://${USER}:postgres@localhost:5432/test npx playwright test",
     "types": "tsc --noEmit",
     "validate": "run-p \"test -- --run\" lint types"
   },

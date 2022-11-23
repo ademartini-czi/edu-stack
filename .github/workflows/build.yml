@@ -83,7 +83,7 @@ jobs:
     name: 🤩 Playwright
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
       SESSION_SECRET: 1347abaec6b43d718213d78d60c932f9
     steps:
       - name: ⛔ Cancel Previous Runs
@@ -114,4 +114,7 @@ jobs:
         run: npm run build
 
       - name: 🤩 Playwright run
-        run: npm run test:e2e
+        # Note that this doesn't use `npm run test:e2e`. Getting the env vars setup right in the
+        # dev vs test environments has been... challenging. For now the workaround is to use the
+        # package.json script for local test runs only, and manually setting up the env vars.
+        run: npx playwright test
