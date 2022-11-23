@@ -82,15 +82,15 @@ jobs:
   playwright:
     name: 🤩 Playwright
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      SESSION_SECRET: 1347abaec6b43d718213d78d60c932f9
     steps:
       - name: ⛔ Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.11.0
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
-
-      - name: 🏄 Copy test env vars
-        run: cp .env.example .env
 
       - name: 😻 Setup node
         uses: actions/setup-node@v3
@@ -106,8 +106,6 @@ jobs:
       - name: 🐳 Docker compose
         # the sleep is just there to give time for postgres to get started
         run: docker-compose up -d && sleep 3
-        env:
-          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres"
 
       - name: 🛠 Setup Database
         run: npx prisma migrate reset --force

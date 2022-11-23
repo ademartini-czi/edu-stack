@@ -50,10 +50,8 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
 - Create `.env` file for local development
 
   ```sh
-  cp .env.example .env && sed -i '' -e "s/postgres:postgres@/$USER:postgres@/g" .env
+  cp .env.example .env
   ```
-
-  > **Note:** This uses `sed` to add your host system's username to the DB url, to work around https://github.com/prisma/prisma/issues/13384 on MacOS systems.
 
 - Start the Postgres Database in [Docker](https://www.docker.com/get-started):
 
