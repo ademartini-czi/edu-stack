@@ -6,8 +6,10 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=development
     ports:
-      - "5432:5432"
+      # Use port 5433 (instead of the normal 5432) on the host system so it doesn't conflict with
+      # a running Postgres instance there (if present).
+      - "5433:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
