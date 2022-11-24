@@ -104,7 +104,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: 🐳 Docker compose
-        # the sleep is just there to give time for postgres to get started
+        # The sleep is just there to give time for postgres to get started
         run: docker-compose up -d && sleep 3
 
       - name: 🛠 Setup Database
@@ -115,6 +115,6 @@ jobs:
 
       - name: 🤩 Playwright run
         # Note that this doesn't use `npm run test:e2e`. Getting the env vars setup right in the
-        # dev vs test environments has been... challenging. For now the workaround is to use the
-        # package.json script for local test runs only, and manually setting up the env vars.
+        # dev vs test environments has been challenging. For now the workaround is to use the
+        # package.json script for local test runs only, and manually setting up the env vars on CI.
         run: npx playwright test

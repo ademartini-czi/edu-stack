@@ -8,8 +8,8 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=development
     ports:
-      # Use port 5433 (instead of the normal 5432) on the host system so it doesn't conflict with
-      # a running Postgres instance there (if present).
+      # Use port 5433 on the host system (instead of the normal 5432) so it doesn't conflict with
+      # Postgres running there (e.g. Along).
       - "5433:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
