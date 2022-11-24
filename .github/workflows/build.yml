@@ -83,7 +83,7 @@ jobs:
     name: 🤩 Playwright
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5433/test
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5434/test
       SESSION_SECRET: 1347abaec6b43d718213d78d60c932f9
     steps:
       - name: ⛔ Cancel Previous Runs
