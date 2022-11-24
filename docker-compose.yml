@@ -6,7 +6,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=development
+      - POSTGRES_DB=postgres
     ports:
       # Use port 5433 on the host system (instead of the normal 5432) so it doesn't conflict with
       # Postgres running there (e.g. Along).
