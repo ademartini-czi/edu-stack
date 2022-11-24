@@ -20,9 +20,6 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   ignorePatterns: ['storybook-static/', 'build/'],
-  rules: {
-    'jsx-a11y/no-autofocus': 'off',
-  },
   overrides: [
     {
       files: ['**/routes/**/*.{js,jsx,ts,tsx}'],
