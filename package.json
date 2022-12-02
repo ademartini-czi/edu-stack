@@ -18,7 +18,7 @@
     "prod": "cross-env NODE_ENV=production node ./build/server.js",
     "routes": "remix routes",
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
-    "setup:e2e": "cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5434/test npx prisma migrate reset --force",
+    "setup:e2e": "npm run build:server && cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5434/test npx prisma migrate reset --force",
     "start": "run-p dev:*",
     "test": "vitest",
     "test:e2e": "npm run setup:e2e && cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5434/test npx playwright test",
