@@ -1,14 +1,5 @@
 name: 🏗️ Build
-on:
-  push:
-    branches:
-      - main
-      - dev
-  pull_request: {}
-
-permissions:
-  actions: write
-  contents: read
+on: [push]
 
 jobs:
   lint:
