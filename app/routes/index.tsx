@@ -1,5 +1,5 @@
 import {Link} from '@remix-run/react';
-
+import LinkThatLooksLikeButton from '~/components/LinkThatLooksLikeButton';
 import {useOptionalUser} from '~/utils';
 
 export default function Index() {
@@ -12,26 +12,17 @@ export default function Index() {
         </Link>
         <div className="flex gap-4">
           {user ? (
-            <Link
-              className="rounded-md border bg-white px-4 py-3 font-medium text-blue-700 hover:bg-blue-50"
-              to="/notes"
-            >
+            <LinkThatLooksLikeButton to="/notes" type="secondary">
               View notes
-            </Link>
+            </LinkThatLooksLikeButton>
           ) : (
             <>
-              <Link
-                className="rounded-md border bg-white px-4 py-3 font-medium text-blue-700 hover:bg-blue-50"
-                to="/join"
-              >
+              <LinkThatLooksLikeButton to="/join" type="secondary">
                 Sign up
-              </Link>
-              <Link
-                className="rounded-md border bg-blue-500 px-4 py-3 font-medium text-white hover:bg-blue-600"
-                to="/login"
-              >
+              </LinkThatLooksLikeButton>
+              <LinkThatLooksLikeButton to="/login" type="primary">
                 Log in
-              </Link>
+              </LinkThatLooksLikeButton>
             </>
           )}
         </div>
