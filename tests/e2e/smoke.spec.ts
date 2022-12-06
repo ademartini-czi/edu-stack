@@ -5,8 +5,8 @@ test('logging in and out', async ({page}) => {
 
   // Log in to an existing account.
   await page.getByRole('link', {name: 'Log In'}).click();
-  await page.getByLabel('Email address').fill('rachel@remix.run');
-  await page.getByLabel('Password').fill('racheliscool');
+  await page.getByLabel('Email address').fill('anakin@cats.com');
+  await page.getByLabel('Password').fill('ilovetreats');
   await page.getByRole('button', {name: 'Log in'}).click();
 
   // Log back out.

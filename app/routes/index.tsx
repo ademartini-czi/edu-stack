@@ -8,7 +8,7 @@ export default function Index() {
     <div>
       <nav className="mx-auto flex max-w-4xl flex-wrap items-center justify-between px-2 pt-6 sm:px-6">
         <Link className="text-4xl" to="/">
-          😺 <span className="hidden sm:inline">Cat Frands</span>
+          😺 <span className="hidden sm:inline">Cat Notes</span>
         </Link>
         <div className="flex gap-4">
           {user ? (
@@ -16,7 +16,7 @@ export default function Index() {
               className="rounded-md border bg-white px-4 py-3 font-medium text-blue-700 hover:bg-blue-50"
               to="/notes"
             >
-              View frands
+              View notes
             </Link>
           ) : (
             <>
@@ -38,10 +38,11 @@ export default function Index() {
       </nav>
       <main className="mx-auto max-w-3xl py-12 sm:py-24">
         <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
-          Keep track of all your favorite cats
+          Keep track of notes... for your cats.
         </h1>
         <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
-          Who are you kidding... they're all you're favorite!
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
       </main>
     </div>

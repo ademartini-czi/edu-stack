@@ -20,7 +20,7 @@ export default function NotesPage() {
     <div className="flex h-full min-h-screen flex-col">
       <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
         <h1 className="text-3xl font-bold">
-          <Link to=".">Notes</Link>
+          <Link to=".">😺 Notes</Link>
         </h1>
         <p>{user.email}</p>
         <Form action="/logout" method="post">
