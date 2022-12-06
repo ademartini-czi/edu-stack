@@ -88,7 +88,7 @@ export default function Join() {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
-        <Form className="space-y-6" method="post" noValidate>
+        <Form className="space-y-6" method="post">
           <div>
             <label
               className="block text-sm font-medium text-gray-700"
@@ -131,8 +131,10 @@ export default function Join() {
                 autoComplete="new-password"
                 className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
                 id="password"
+                minLength={8}
                 name="password"
                 ref={passwordRef}
+                required
                 type="password"
               />
               {actionData?.errors?.password && (

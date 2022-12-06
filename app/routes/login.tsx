@@ -82,7 +82,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
-        <Form className="space-y-6" method="post" noValidate>
+        <Form className="space-y-6" method="post">
           <div>
             <label
               className="block text-sm font-medium text-gray-700"
@@ -127,6 +127,7 @@ export default function LoginPage() {
                 id="password"
                 name="password"
                 ref={passwordRef}
+                required
                 type="password"
               />
               {actionData?.errors?.password && (
