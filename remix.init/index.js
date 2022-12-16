@@ -55,12 +55,6 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
   const README_PATH = path.join(rootDirectory, 'README.md');
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, '.env.example');
   const ENV_PATH = path.join(rootDirectory, '.env');
-  const DEPLOY_WORKFLOW_PATH = path.join(
-    rootDirectory,
-    '.github',
-    'workflows',
-    'deploy.yml',
-  );
   const DOCKERFILE_PATH = path.join(rootDirectory, 'Dockerfile');
 
   const REPLACER = 'blues-stack-template';
@@ -72,18 +66,10 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
     // get rid of anything that's not allowed in an app name
     .replace(/[^a-zA-Z0-9-_]/g, '-');
 
-  const [
-    readme,
-    env,
-    dockerfile,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    deployWorkflow,
-    packageJson,
-  ] = await Promise.all([
+  const [readme, env, dockerfile, packageJson] = await Promise.all([
     fs.readFile(README_PATH, 'utf-8'),
     fs.readFile(EXAMPLE_ENV_PATH, 'utf-8'),
     fs.readFile(DOCKERFILE_PATH, 'utf-8'),
-    fs.readFile(DEPLOY_WORKFLOW_PATH, 'utf-8').then(YAML.parse),
     PackageJson.load(rootDirectory),
   ]);
 
@@ -115,27 +101,12 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
       path.join(rootDirectory, 'remix.init', 'gitignore'),
       path.join(rootDirectory, '.gitignore'),
     ),
-    fs.copyFile(
-      path.join(rootDirectory, 'remix.init', 'pull_request_template.md'),
-      path.join(rootDirectory, '.github/pull_request_template.md'),
-    ),
-    fs.rm(path.join(rootDirectory, '.github', 'ISSUE_TEMPLATE'), {
-      recursive: true,
-    }),
-    fs.rm(path.join(rootDirectory, '.github', 'dependabot.yml')),
-    fs.rm(path.join(rootDirectory, '.github', 'PULL_REQUEST_TEMPLATE.md')),
-
     // Remove the stack repo's lock file, so that the generated project will generate its own.
     fs.rm(path.join(rootDirectory, 'package-lock.json'), {force: true}),
     fs.rm(path.join(rootDirectory, 'yarn.lock'), {force: true}),
   ];
 
   await Promise.all(fileOperationPromises);
-
-  execSync(pm.run('format', '--loglevel warn'), {
-    cwd: rootDirectory,
-    stdio: 'inherit',
-  });
 
   console.log(
     `
