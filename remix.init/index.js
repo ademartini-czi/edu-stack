@@ -1,10 +1,8 @@
-const {execSync} = require('child_process');
 const crypto = require('crypto');
 const fs = require('fs/promises');
 const path = require('path');
 
 const PackageJson = require('@npmcli/package-json');
-const YAML = require('yaml');
 
 const escapeRegExp = (string) =>
   // $& means the whole matched string
