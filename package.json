@@ -18,10 +18,8 @@
     "prod": "cross-env NODE_ENV=production node ./build/server.js",
     "routes": "remix routes",
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
-    "setup:e2e": "npm run build:server && cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5434/test npx prisma migrate reset --force",
     "start": "npm run dev",
     "test": "vitest",
-    "test:e2e": "npm run setup:e2e && cross-env DATABASE_URL=postgresql://postgres:postgres@localhost:5434/test npx playwright test",
     "types": "tsc --noEmit",
     "validate": "run-p \"test -- --run\" lint types"
   },
@@ -55,7 +53,6 @@
     "@chanzuckerberg/eslint-plugin-edu-react": "^1.1.7",
     "@chanzuckerberg/prettier-config-edu": "^1.0.1",
     "@faker-js/faker": "^7.6.0",
-    "@playwright/test": "^1.28.1",
     "@remix-run/dev": "^1.8.1",
     "@remix-run/eslint-config": "^1.8.1",
     "@testing-library/dom": "^8.19.0",
