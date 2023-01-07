@@ -1,6 +1,7 @@
-const {setupServer} = require('msw/node');
+import {setupServer} from 'msw/node';
+import notesHandlers from './notes';
 
-const server = setupServer();
+const server = setupServer(...notesHandlers);
 
 server.listen({onUnhandledRequest: 'bypass'});
 console.info('🔶 Mock server running');

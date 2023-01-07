@@ -7,73 +7,50 @@ export type Note = {
   body: string;
 };
 
-const notes: Record<string, Note> = {
-  1: {
-    id: '1',
-    title: "Anakin's note",
-    body: 'Treats are the best',
-    userId: '666',
-  },
-  2: {
-    id: '2',
-    title: "Prosecco's note",
-    body: 'Feed me!',
-    userId: '666',
-  },
-};
-
-export function getNote({
+export async function getNote({
   id,
   userId,
 }: Pick<Note, 'id'> & {
   userId: User['id'];
 }) {
-  const note = notes[id];
+  const response = await fetch(`https://example.com/notes/${id}`);
+  const data = (await response.json()) as Note;
 
-  if (note && note.userId === userId) {
-    return Promise.resolve(note);
+  if (data.userId !== userId) {
+    return Promise.reject();
   }
 
-  return Promise.reject();
+  return data;
 }
 
-export function getNoteListItems({userId}: {userId: User['id']}) {
-  return Promise.resolve(
-    Object.values(notes).filter((note) => note.userId === userId),
-  );
+export async function getNoteListItems({userId}: {userId: User['id']}) {
+  const response = await fetch(`https://example.com/users/${userId}/notes`);
+  const data = (await response.json()) as Note[];
+  return data;
 }
 
-export function createNote({
+export async function createNote({
   body,
   title,
   userId,
 }: Pick<Note, 'body' | 'title'> & {
   userId: User['id'];
 }) {
-  const ids = Object.keys(notes).map(Number);
-  const maxId = Math.max(...ids);
-  const nextId = String(maxId + 1);
+  const response = await fetch(`https://example.com/users/${userId}/notes`, {
+    method: 'POST',
+    body: JSON.stringify({body, title, userId}),
+  });
 
-  const note: Note = {
-    id: nextId,
-    title,
-    body,
-    userId,
-  };
+  const data = (await response.json()) as Note;
 
-  notes[nextId] = note;
-
-  return Promise.resolve(note);
+  return data;
 }
 
-export function deleteNote({
+export async function deleteNote({
   id,
   userId,
 }: Pick<Note, 'id'> & {userId: User['id']}) {
-  if (notes[id]?.userId === userId) {
-    delete notes[id];
-    return Promise.resolve();
-  }
-
-  return Promise.reject();
+  await fetch(`https://example.com/notes/${id}`, {
+    method: 'DELETE',
+  });
 }
