@@ -1,62 +1,80 @@
-import type {Password, User} from '@prisma/client';
 import bcrypt from 'bcryptjs';
 
-import {prisma} from '~/db.server';
+export type User = {id: string; email: string; password: string};
 
-export type {User} from '@prisma/client';
+const users: Record<string, User> = {
+  666: {
+    id: '666',
+    email: 'anakin@cats.com',
+    password: bcrypt.hashSync('ilovetreats', 10),
+  },
+};
 
 export async function getUserById(id: User['id']) {
-  return prisma.user.findUnique({where: {id}});
+  const user = users[id];
+
+  if (user) {
+    return Promise.resolve(user);
+  }
+
+  return Promise.reject();
 }
 
 export async function getUserByEmail(email: User['email']) {
-  return prisma.user.findUnique({where: {email}});
+  const user = Object.values(users).find((user) => user.email === email);
+
+  if (user) {
+    return Promise.resolve(user);
+  }
+
+  return Promise.reject();
 }
 
 export async function createUser(email: User['email'], password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
+  const ids = Object.keys(users).map(Number);
+  const maxId = Math.max(...ids);
+  const nextId = String(maxId + 1);
 
-  return prisma.user.create({
-    data: {
-      email,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
-    },
-  });
+  const user: User = {
+    id: nextId,
+    email,
+    password: hashedPassword,
+  };
+
+  users[nextId] = user;
+
+  return Promise.resolve(user);
 }
 
 export async function deleteUserByEmail(email: User['email']) {
-  return prisma.user.delete({where: {email}});
+  const user = await getUserByEmail(email);
+
+  if (user) {
+    delete users[user.id];
+    return Promise.resolve();
+  }
+
+  return Promise.reject();
 }
 
 export async function verifyLogin(
   email: User['email'],
-  password: Password['hash'],
+  password: User['password'],
 ) {
-  const userWithPassword = await prisma.user.findUnique({
-    where: {email},
-    include: {
-      password: true,
-    },
-  });
+  const user = await getUserByEmail(email);
 
-  if (!userWithPassword || !userWithPassword.password) {
+  if (!user || !user.password) {
     return null;
   }
 
-  const isValid = await bcrypt.compare(
-    password,
-    userWithPassword.password.hash,
-  );
+  const isValid = await bcrypt.compare(password, user.password);
 
   if (!isValid) {
     return null;
   }
 
-  const {password: _password, ...userWithoutPassword} = userWithPassword;
+  const {password: _password, ...userWithoutPassword} = user;
 
   return userWithoutPassword;
 }

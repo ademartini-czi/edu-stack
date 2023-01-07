@@ -1,8 +1,26 @@
-import type {User, Note} from '@prisma/client';
+import type {User} from './user.server';
 
-import {prisma} from '~/db.server';
+export type Note = {
+  id: string;
+  userId: User['id'];
+  title: string;
+  body: string;
+};
 
-export type {Note} from '@prisma/client';
+const notes: Record<string, Note> = {
+  1: {
+    id: '1',
+    title: "Anakin's note",
+    body: 'Treats are the best',
+    userId: '666',
+  },
+  2: {
+    id: '2',
+    title: "Prosecco's note",
+    body: 'Feed me!',
+    userId: '666',
+  },
+};
 
 export function getNote({
   id,
@@ -10,18 +28,19 @@ export function getNote({
 }: Pick<Note, 'id'> & {
   userId: User['id'];
 }) {
-  return prisma.note.findFirst({
-    select: {id: true, body: true, title: true},
-    where: {id, userId},
-  });
+  const note = notes[id];
+
+  if (note && note.userId === userId) {
+    return Promise.resolve(note);
+  }
+
+  return Promise.reject();
 }
 
 export function getNoteListItems({userId}: {userId: User['id']}) {
-  return prisma.note.findMany({
-    where: {userId},
-    select: {id: true, title: true},
-    orderBy: {updatedAt: 'desc'},
-  });
+  return Promise.resolve(
+    Object.values(notes).filter((note) => note.userId === userId),
+  );
 }
 
 export function createNote({
@@ -31,24 +50,30 @@ export function createNote({
 }: Pick<Note, 'body' | 'title'> & {
   userId: User['id'];
 }) {
-  return prisma.note.create({
-    data: {
-      title,
-      body,
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
-    },
-  });
+  const ids = Object.keys(notes).map(Number);
+  const maxId = Math.max(...ids);
+  const nextId = String(maxId + 1);
+
+  const note: Note = {
+    id: nextId,
+    title,
+    body,
+    userId,
+  };
+
+  notes[nextId] = note;
+
+  return Promise.resolve(note);
 }
 
 export function deleteNote({
   id,
   userId,
 }: Pick<Note, 'id'> & {userId: User['id']}) {
-  return prisma.note.deleteMany({
-    where: {id, userId},
-  });
+  if (notes[id]?.userId === userId) {
+    delete notes[id];
+    return Promise.resolve();
+  }
+
+  return Promise.reject();
 }
