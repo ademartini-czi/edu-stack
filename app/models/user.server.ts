@@ -2,60 +2,37 @@ import bcrypt from 'bcryptjs';
 
 export type User = {id: string; email: string; password: string};
 
-const users: Record<string, User> = {
-  666: {
-    id: '666',
-    email: 'anakin@cats.com',
-    password: bcrypt.hashSync('ilovetreats', 10),
-  },
-};
-
 export async function getUserById(id: User['id']) {
-  const user = users[id];
+  const response = await fetch(`https://example.com/users/${id}`);
 
-  if (user) {
-    return Promise.resolve(user);
+  if (response.status === 200) {
+    const data = (await response.json()) as User;
+    return data;
   }
 
-  return Promise.reject();
+  return null;
 }
 
 export async function getUserByEmail(email: User['email']) {
-  const user = Object.values(users).find((user) => user.email === email);
+  const response = await fetch(`https://example.com/users/email/${email}`);
 
-  if (user) {
-    return Promise.resolve(user);
+  if (response.status === 200) {
+    const data = (await response.json()) as User;
+    return data;
   }
 
-  return Promise.reject();
+  return null;
 }
 
 export async function createUser(email: User['email'], password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
-  const ids = Object.keys(users).map(Number);
-  const maxId = Math.max(...ids);
-  const nextId = String(maxId + 1);
+  const response = await fetch('https://example.com/users', {
+    method: 'POST',
+    body: JSON.stringify({email, hashedPassword}),
+  });
 
-  const user: User = {
-    id: nextId,
-    email,
-    password: hashedPassword,
-  };
-
-  users[nextId] = user;
-
-  return Promise.resolve(user);
-}
-
-export async function deleteUserByEmail(email: User['email']) {
-  const user = await getUserByEmail(email);
-
-  if (user) {
-    delete users[user.id];
-    return Promise.resolve();
-  }
-
-  return Promise.reject();
+  const data = (await response.json()) as User;
+  return data;
 }
 
 export async function verifyLogin(
