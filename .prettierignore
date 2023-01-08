@@ -4,7 +4,4 @@ node_modules
 /public/build
 .env
 
-/playwright-report
-/postgres-data
-
 /app/styles/tailwind.css

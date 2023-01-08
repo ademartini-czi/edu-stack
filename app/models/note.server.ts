@@ -1,54 +1,56 @@
-import type {User, Note} from '@prisma/client';
+import type {User} from './user.server';
 
-import {prisma} from '~/db.server';
+export type Note = {
+  id: string;
+  userId: User['id'];
+  title: string;
+  body: string;
+};
 
-export type {Note} from '@prisma/client';
-
-export function getNote({
+export async function getNote({
   id,
   userId,
 }: Pick<Note, 'id'> & {
   userId: User['id'];
 }) {
-  return prisma.note.findFirst({
-    select: {id: true, body: true, title: true},
-    where: {id, userId},
-  });
+  const response = await fetch(`https://example.com/notes/${id}`);
+  const data = (await response.json()) as Note;
+
+  if (data.userId !== userId) {
+    return Promise.reject();
+  }
+
+  return data;
 }
 
-export function getNoteListItems({userId}: {userId: User['id']}) {
-  return prisma.note.findMany({
-    where: {userId},
-    select: {id: true, title: true},
-    orderBy: {updatedAt: 'desc'},
-  });
+export async function getNoteListItems({userId}: {userId: User['id']}) {
+  const response = await fetch(`https://example.com/users/${userId}/notes`);
+  const data = (await response.json()) as Note[];
+  return data;
 }
 
-export function createNote({
+export async function createNote({
   body,
   title,
   userId,
 }: Pick<Note, 'body' | 'title'> & {
   userId: User['id'];
 }) {
-  return prisma.note.create({
-    data: {
-      title,
-      body,
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
-    },
+  const response = await fetch(`https://example.com/users/${userId}/notes`, {
+    method: 'POST',
+    body: JSON.stringify({body, title, userId}),
   });
+
+  const data = (await response.json()) as Note;
+
+  return data;
 }
 
-export function deleteNote({
+export async function deleteNote({
   id,
   userId,
 }: Pick<Note, 'id'> & {userId: User['id']}) {
-  return prisma.note.deleteMany({
-    where: {id, userId},
+  await fetch(`https://example.com/notes/${id}`, {
+    method: 'DELETE',
   });
 }

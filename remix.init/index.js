@@ -30,13 +30,11 @@ const getRandomString = (length) => crypto.randomBytes(length).toString('hex');
 
 const updatePackageJson = ({APP_NAME, packageJson}) => {
   const {
-    prisma: {seed: prismaSeed, ...prisma},
     scripts: {types, validate, ...scripts},
   } = packageJson.content;
 
   packageJson.update({
     name: APP_NAME,
-    prisma: {...prisma, seed: prismaSeed},
     scripts: {...scripts, types, validate},
   });
 };
@@ -109,12 +107,6 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
   console.log(
     `
 Setup is almost complete. Follow these steps to finish initialization:
-
-- Start the database:
-  ${pm.run('docker')}
-
-- Run setup (this updates the database):
-  ${pm.run('setup')}
 
 - Run the first build (this generates the server you will run):
   ${pm.run('build')}
