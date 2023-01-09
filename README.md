@@ -62,3 +62,8 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
   ```
 
 This starts your app in development mode, rebuilding assets on file changes.
+
+By default there is a new user with some data you can use to get started:
+
+- Email: jane@example.com
+- Password: password

@@ -11,8 +11,8 @@ import type {User} from '~/models/user.server';
 const users: Record<string, User> = {
   666: {
     id: '666',
-    email: 'anakin@cats.com',
-    password: bcrypt.hashSync('ilovetreats', 10),
+    email: 'jane@example.com',
+    password: bcrypt.hashSync('password', 10),
   },
 };
 

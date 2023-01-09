@@ -9,7 +9,7 @@ export default function Index() {
     <div>
       <nav className="mx-auto flex max-w-4xl flex-wrap items-center justify-between px-2 pt-6 sm:px-6">
         <Link className="text-4xl" to="/">
-          😺 <span className="hidden sm:inline">Cat Notes</span>
+          😺 <span className="hidden sm:inline">Notes</span>
         </Link>
         <div className="flex gap-4">
           {user ? (
@@ -33,7 +33,7 @@ export default function Index() {
           className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl"
           size="h1"
         >
-          Keep track of notes... for your cats.
+          Keep track of notes...
         </Heading>
         <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
