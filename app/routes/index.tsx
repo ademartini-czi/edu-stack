@@ -1,3 +1,4 @@
+import {Heading} from '@chanzuckerberg/eds';
 import {Link} from '@remix-run/react';
 import LinkThatLooksLikeButton from '~/components/LinkThatLooksLikeButton';
 import {useOptionalUser} from '~/utils';
@@ -28,9 +29,12 @@ export default function Index() {
         </div>
       </nav>
       <main className="mx-auto max-w-3xl py-12 sm:py-24">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl">
+        <Heading
+          className="text-4xl font-bold tracking-tight sm:text-center sm:text-6xl"
+          size="h1"
+        >
           Keep track of notes... for your cats.
-        </h1>
+        </Heading>
         <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-center">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
