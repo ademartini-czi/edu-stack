@@ -1,3 +1,5 @@
+import edsVariablesUrl from '@chanzuckerberg/eds/lib/tokens/css/variables.css';
+import {cssBundleHref} from '@remix-run/css-bundle';
 import type {LinksFunction, LoaderArgs, MetaFunction} from '@remix-run/node';
 import {json} from '@remix-run/node';
 import {
@@ -8,12 +10,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
-
 import {getUser} from './session.server';
 import tailwindStylesheetUrl from './styles/tailwind.css';
 
 export const links: LinksFunction = () => {
-  return [{rel: 'stylesheet', href: tailwindStylesheetUrl}];
+  return [
+    {rel: 'stylesheet', href: tailwindStylesheetUrl},
+    {rel: 'stylesheet', href: edsVariablesUrl},
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    {rel: 'stylesheet', href: cssBundleHref!},
+  ];
 };
 
 export const meta: MetaFunction = () => ({
