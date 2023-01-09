@@ -2,8 +2,8 @@ import type {ActionArgs} from '@remix-run/node';
 import {json, redirect} from '@remix-run/node';
 import {Form, useActionData} from '@remix-run/react';
 import * as React from 'react';
-
-import {createNote} from '~/models/note.server';
+import {graphql, gql} from '~/graphql.server';
+import type {Note} from '~/models/note.server';
 import {requireUserId} from '~/session.server';
 
 export async function action({request}: ActionArgs) {
@@ -27,9 +27,18 @@ export async function action({request}: ActionArgs) {
     );
   }
 
-  const note = await createNote({title, body, userId});
+  const data = await graphql.request<{note: Pick<Note, 'id'>}>(
+    gql`
+      mutation CreateNote($title: String!, $body: String!, $userId: String!) {
+        note(title: $title, body: $body, userId: $userId) {
+          id
+        }
+      }
+    `,
+    {title, body, userId},
+  );
 
-  return redirect(`/notes/${note.id}`);
+  return redirect(`/notes/${data.note.id}`);
 }
 
 export default function NewNotePage() {

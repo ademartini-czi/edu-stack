@@ -1,4 +1,4 @@
-import {rest, type DefaultBodyType} from 'msw';
+import {graphql} from 'msw';
 import type {Note} from '~/models/note.server';
 
 /*
@@ -22,76 +22,93 @@ const notes: Record<string, Note> = {
   },
 };
 
-type GetNoteParams = {
-  noteId: string;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DefaultQuery = Record<string, any>;
+
+type GetNoteQuery = {
+  note: {
+    id: string;
+    userId: string;
+    title: string;
+    body: string;
+  };
 };
 
-type GetNotesParams = {
+type GetNoteVariables = {
+  id: string;
+};
+
+type GetNoteListItemsQuery = {
+  notes: {
+    id: string;
+    userId: string;
+    title: string;
+    body: string;
+  }[];
+};
+
+type GetNoteListItemsVariables = {
   userId: string;
 };
 
-type CreateNoteBody = {
+type CreateNoteVariables = {
   body: string;
   title: string;
+  userId: string;
 };
 
 export default [
   // Get one
-  rest.get<DefaultBodyType, GetNoteParams, DefaultBodyType>(
-    'https://example.com/notes/:noteId',
-    (req, res, ctx) => {
-      const note = notes[req.params.noteId];
+  graphql.query<GetNoteQuery, GetNoteVariables>('GetNote', (req, res, ctx) => {
+    const note = notes[req.variables.id];
 
-      if (note) {
-        return res(ctx.json(note));
-      }
+    if (note) {
+      return res(ctx.data({note}));
+    }
 
-      return res(ctx.status(404));
-    },
-  ),
+    return res(ctx.status(404));
+  }),
   // Get all
-  rest.get<DefaultBodyType, GetNotesParams, DefaultBodyType>(
-    'https://example.com/users/:userId/notes',
+  graphql.query<GetNoteListItemsQuery, GetNoteListItemsVariables>(
+    'GetNoteListItems',
     (req, res, ctx) => {
-      const userId = req.params.userId;
+      const userId = req.variables.userId;
       const userNotes = Object.values(notes).filter(
         (note) => note.userId === userId,
       );
 
-      return res(ctx.json(userNotes));
+      return res(ctx.data({notes: userNotes}));
     },
   ),
   // Create
-  rest.post<CreateNoteBody, GetNotesParams, DefaultBodyType>(
-    'https://example.com/users/:userId/notes',
-    async (req, res, ctx) => {
+  graphql.mutation<GetNoteQuery, CreateNoteVariables>(
+    'CreateNote',
+    (req, res, ctx) => {
       const ids = Object.keys(notes).map(Number);
       const maxId = ids.length > 0 ? Math.max(...ids) : 0;
       const nextId = String(maxId + 1);
 
-      const requestBody = await req.json();
-
       const note: Note = {
         id: nextId,
-        title: requestBody.title,
-        body: requestBody.body,
-        userId: req.params.userId,
+        title: req.variables.title,
+        body: req.variables.body,
+        userId: req.variables.userId,
       };
 
       notes[nextId] = note;
 
-      return res(ctx.json(note));
+      return res(ctx.data({note}));
     },
   ),
   // Delete
-  rest.delete<DefaultBodyType, GetNoteParams, DefaultBodyType>(
-    'https://example.com/notes/:noteId',
+  graphql.mutation<DefaultQuery, GetNoteVariables>(
+    'DeleteNote',
     (req, res, ctx) => {
-      const noteId = req.params.noteId;
+      const noteId = req.variables.id;
 
       if (notes[noteId]) {
         delete notes[noteId];
-        return res(ctx.status(200));
+        return res(ctx.data({}));
       }
 
       return res(ctx.status(404));

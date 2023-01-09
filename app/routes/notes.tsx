@@ -1,15 +1,29 @@
 import type {LoaderArgs} from '@remix-run/node';
 import {json} from '@remix-run/node';
 import {Form, Link, NavLink, Outlet, useLoaderData} from '@remix-run/react';
-
-import {getNoteListItems} from '~/models/note.server';
+import {graphql, gql} from '~/graphql.server';
+import type {Note} from '~/models/note.server';
 import {requireUserId} from '~/session.server';
 import {useUser} from '~/utils';
 
 export async function loader({request}: LoaderArgs) {
   const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItems({userId});
-  return json({noteListItems});
+
+  const data = await graphql.request<{notes: Note[]}>(
+    gql`
+      query GetNoteListItems($userId: String!) {
+        notes(userId: $userId) {
+          id
+          userId
+          title
+          body
+        }
+      }
+    `,
+    {userId},
+  );
+
+  return json(data);
 }
 
 export default function NotesPage() {
@@ -41,11 +55,11 @@ export default function NotesPage() {
 
           <hr />
 
-          {data.noteListItems.length === 0 ? (
+          {data.notes.length === 0 ? (
             <p className="p-4">No notes yet</p>
           ) : (
             <ol>
-              {data.noteListItems.map((note) => (
+              {data.notes.map((note) => (
                 <li key={note.id}>
                   <NavLink
                     className={({isActive}) =>
