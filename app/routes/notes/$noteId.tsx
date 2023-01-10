@@ -3,32 +3,30 @@ import {json, redirect} from '@remix-run/node';
 import {Form, useCatch, useLoaderData} from '@remix-run/react';
 import invariant from 'tiny-invariant';
 import {graphql, gql} from '~/graphql.server';
-import type {Note} from '~/models/note.server';
 import {requireUserId} from '~/session.server';
 
 export async function loader({request, params}: LoaderArgs) {
   await requireUserId(request);
   invariant(params.noteId, 'noteId not found');
 
-  const data = await graphql.request<{note: Note}>(
-    gql`
+  const {note} = await graphql.request(
+    gql(`
       query GetNote($id: String!) {
         note(id: $id) {
           id
-          userId
           title
           body
         }
       }
-    `,
+    `),
     {id: params.noteId},
   );
 
-  if (!data?.note) {
+  if (!note) {
     throw new Response('Not Found', {status: 404});
   }
 
-  return json(data);
+  return json({note});
 }
 
 export async function action({request, params}: ActionArgs) {
@@ -36,13 +34,13 @@ export async function action({request, params}: ActionArgs) {
   invariant(params.noteId, 'noteId not found');
 
   await graphql.request(
-    gql`
+    gql(`
       mutation DeleteNote($id: String!) {
-        note(id: $id) {
+        deleteNote(id: $id) {
           id
         }
       }
-    `,
+    `),
     {id: params.noteId},
   );
 

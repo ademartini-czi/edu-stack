@@ -2,24 +2,22 @@ import type {LoaderArgs} from '@remix-run/node';
 import {json} from '@remix-run/node';
 import {Form, Link, NavLink, Outlet, useLoaderData} from '@remix-run/react';
 import {graphql, gql} from '~/graphql.server';
-import type {Note} from '~/models/note.server';
 import {requireUserId} from '~/session.server';
 import {useUser} from '~/utils';
 
 export async function loader({request}: LoaderArgs) {
   const userId = await requireUserId(request);
 
-  const data = await graphql.request<{notes: Note[]}>(
-    gql`
+  const data = await graphql.request(
+    gql(`
       query GetNoteListItems($userId: String!) {
         notes(userId: $userId) {
           id
-          userId
           title
           body
         }
       }
-    `,
+    `),
     {userId},
   );
 
