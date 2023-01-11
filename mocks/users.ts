@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import {rest, type DefaultBodyType} from 'msw';
-import type {User} from '~/models/user.server';
+import type {User} from '~/gql/graphql';
 
 /*
   Mock API endpoint for the example app to talk to.
@@ -8,7 +8,7 @@ import type {User} from '~/models/user.server';
   - Don't add too much logic here. No need to duplicate an entire server.
 */
 
-const users: Record<string, User> = {
+export const users: Record<string, User> = {
   666: {
     id: '666',
     email: 'jane@example.com',

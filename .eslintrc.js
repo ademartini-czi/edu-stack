@@ -19,7 +19,7 @@ module.exports = {
     'plugin:@chanzuckerberg/eslint-plugin-edu-react/recommended',
     'plugin:prettier/recommended',
   ],
-  ignorePatterns: ['storybook-static/', 'build/'],
+  ignorePatterns: ['storybook-static/', 'build/', 'app/gql/'],
   overrides: [
     {
       files: ['**/routes/**/*.{js,jsx,ts,tsx}'],

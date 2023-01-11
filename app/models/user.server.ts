@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs';
-
-export type User = {id: string; email: string; password: string};
+import type {User} from '~/gql/graphql';
 
 export async function getUserById(id: User['id']) {
   const response = await fetch(`https://example.com/users/${id}`);

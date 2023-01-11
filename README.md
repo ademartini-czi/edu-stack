@@ -24,6 +24,7 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
 - Code formatting with [Prettier](https://prettier.io)
 - Linting with [ESLint](https://eslint.org)
 - Static Types with [TypeScript](https://typescriptlang.org)
+- Query external services with [GraphQL](https://graphql.org/)
 
 ## Requirements
 
@@ -54,6 +55,12 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
   ```sh
   npm run build
   ````
+
+- After changing the GraphQL schema or queries, generate new types with
+
+  ```sh
+  npm run codegen
+  ```
 
 - Start dev server:
 

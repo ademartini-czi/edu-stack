@@ -69,3 +69,24 @@ jobs:
 
       - name: ⚡ Run vitest
         run: npm run test
+
+  codegen:
+    name: ⌨️ Codegen
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⛔ Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 😻 Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.node-version'
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: ⌨️ Validate no pending codegen
+        run: npm run codegen -- --check

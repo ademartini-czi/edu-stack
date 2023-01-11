@@ -1,0 +1,27 @@
+# Example GraphQL schema for the demo app. Corresponds to the mock endpoints defined in /mocks.
+# When you have a real GraphQL endpoint to talk to, replace this with an actual schema, or update
+# codegen.ts to point to the actual schema.
+
+type User {
+  id: String!
+  email: String!
+  password: String!
+  notes: [Note]
+}
+
+type Note {
+  id: String!
+  title: String!
+  body: String!
+  user: User!
+}
+
+type Query {
+  note(id: String!): Note
+  notes(userId: String!): [Note!]!
+}
+
+type Mutation {
+  createNote(title: String!, body: String!, userId: String!): Note!
+  deleteNote(id: String!): Note!
+}
