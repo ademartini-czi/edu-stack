@@ -56,7 +56,7 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
   npm run build
   ````
 
-- After changing the GraphQL schema or queries, generate new types with
+- If you ever change the GraphQL schema or queries, generate new types with
 
   ```sh
   npm run codegen

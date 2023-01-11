@@ -1,6 +1,6 @@
-# Example GraphQL schema for the demo app. Corresponds to the mock endpoints defined in /mocks.
-# When you have a real GraphQL endpoint to talk to, replace this with an actual schema, or update
-# codegen.ts to point to the actual schema.
+# Example GraphQL schema for the demo app which codegen generates types from. Corresponds to the
+# mock endpoints defined in /mocks. When you have a real GraphQL endpoint to talk to, replace this
+# with an actual schema, or update codegen.ts to point to one.
 
 type User {
   id: String!
