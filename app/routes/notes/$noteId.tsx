@@ -57,7 +57,7 @@ export default function NoteDetailsPage() {
       <hr className="my-4" />
       <Form method="post">
         <button
-          className="rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
+          className="rounded bg-blue-700  py-2 px-4 text-white hover:bg-blue-800 focus:bg-blue-400"
           type="submit"
         >
           Delete
