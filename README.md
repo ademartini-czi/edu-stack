@@ -56,7 +56,7 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
 
   ```sh
   npm run build
-  ````
+  ```
 
 - If you ever change the GraphQL schema or queries, generate new types with
 
