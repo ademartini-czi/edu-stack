@@ -1,4 +1,5 @@
 import type {Parameters} from '@storybook/react';
+import '../app/styles/tailwind.css';
 
 export const parameters: Parameters = {
   /**
