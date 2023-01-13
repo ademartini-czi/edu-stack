@@ -1,9 +1,8 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import NoteIndexPage from './index';
-import RemixStub from 'mocks/RemixStub';
+import RemixStub from 'tests/RemixStub';
 
 export default {
-  title: 'app/routes/notes/NoteIndexPage',
   component: NoteIndexPage,
   render: () => (
     <RemixStub>

@@ -33,7 +33,7 @@ const config: StorybookConfig = {
     theirConfig.resolve['alias'] = {
       ...theirConfig.resolve['alias'],
       '~': path.resolve(__dirname, '../app'),
-      mocks: path.resolve(__dirname, '../mocks'),
+      tests: path.resolve(__dirname, '../tests'),
     };
 
     /**

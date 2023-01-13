@@ -3,7 +3,7 @@ import type {RemixContextObject} from '@remix-run/react/dist/entry';
 import * as React from 'react';
 
 // We are intentionally ignoring this eslint error because we want
-// to use the version of react-router-dom that @remix-run/react depends on so
+// to use the version of react-router-dom that @remix-run/react depends on.
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import type {RouteObject} from 'react-router-dom';

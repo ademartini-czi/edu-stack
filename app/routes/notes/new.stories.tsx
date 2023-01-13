@@ -1,10 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {within, userEvent} from '@storybook/testing-library';
 import NewNotePage from './new';
-import RemixStub from 'mocks/RemixStub';
+import RemixStub from 'tests/RemixStub';
 
 export default {
-  title: 'app/routes/notes/NewNotePage',
   component: NewNotePage,
   render: () => (
     <RemixStub>

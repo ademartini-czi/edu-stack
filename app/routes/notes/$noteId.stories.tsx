@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import NoteDetailsPage from './$noteId';
-import RemixStub from 'mocks/RemixStub';
+import RemixStub from 'tests/RemixStub';
 
 const loader = () => ({
   note: {
@@ -11,7 +11,6 @@ const loader = () => ({
 });
 
 export default {
-  title: 'app/routes/notes/NoteDetailsPage',
   component: NoteDetailsPage,
   render: () => (
     <RemixStub loader={loader}>
