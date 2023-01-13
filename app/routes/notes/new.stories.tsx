@@ -10,11 +10,9 @@ export default {
       <NewNotePage />
     </RemixStub>
   ),
-} as Meta<Args>;
+} as Meta;
 
-type Args = React.ComponentProps<typeof NewNotePage>;
-
-export const Default: StoryObj<Args> = {};
+export const Default: StoryObj = {};
 
 const emptyAction = () => ({
   errors: {
@@ -22,7 +20,7 @@ const emptyAction = () => ({
     title: 'The title field is required, please provide some text.',
   },
 });
-export const EmptySubmission: StoryObj<Args> = {
+export const EmptySubmission: StoryObj = {
   render: () => (
     <RemixStub action={emptyAction}>
       <NewNotePage />

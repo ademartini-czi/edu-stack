@@ -9,8 +9,6 @@ export default {
       <NoteIndexPage />
     </RemixStub>
   ),
-} as Meta<Args>;
+} as Meta;
 
-type Args = React.ComponentProps<typeof NoteIndexPage>;
-
-export const Default: StoryObj<Args> = {};
+export const Default: StoryObj = {};

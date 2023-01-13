@@ -8,7 +8,7 @@
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
     "codegen": "graphql-codegen --config codegen.ts",
-    "build:storybook": "npm run build:css && storybook build --output-dir ./private/storybook --webpack-stats-json",
+    "build:storybook": "npm run build:css && storybook build --output-dir ./storybook-static --webpack-stats-json",
     "dev": "run-p dev:*",
     "dev:build": "cross-env NODE_ENV=development npm run build:server -- --watch",
     "dev:css": "cross-env NODE_ENV=development npm run generate:css -- --watch",
@@ -23,7 +23,7 @@
     "storybook:start": "storybook dev -p 6006",
     "test": "vitest",
     "test:storybook:axe": "run-s build:storybook test:storybook:axeOnly",
-    "test:storybook:axeOnly": "axe-storybook --build-dir ./private/storybook",
+    "test:storybook:axeOnly": "axe-storybook --build-dir ./storybook-static",
     "types": "tsc --noEmit",
     "validate": "run-p \"test -- --run\" lint types"
   },

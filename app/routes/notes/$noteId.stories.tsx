@@ -17,8 +17,6 @@ export default {
       <NoteDetailsPage />
     </RemixStub>
   ),
-} as Meta<Args>;
+} as Meta;
 
-type Args = React.ComponentProps<typeof NoteDetailsPage>;
-
-export const Default: StoryObj<Args> = {};
+export const Default: StoryObj = {};
