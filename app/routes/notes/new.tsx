@@ -67,7 +67,7 @@ export default function NewNotePage() {
         <label className="flex w-full flex-col gap-1">
           <span>Title: </span>
           <input
-            aria-errormessage={
+            aria-describedby={
               actionData?.errors?.title ? 'title-error' : undefined
             }
             aria-invalid={actionData?.errors?.title ? true : undefined}
@@ -77,11 +77,7 @@ export default function NewNotePage() {
           />
         </label>
         {actionData?.errors?.title && (
-          <div
-            aria-live="assertive"
-            className="pt-1 text-red-700"
-            id="title-error"
-          >
+          <div className="pt-1 text-red-700" id="title-error">
             {actionData.errors.title}
           </div>
         )}
@@ -91,7 +87,7 @@ export default function NewNotePage() {
         <label className="flex w-full flex-col gap-1">
           <span>Body: </span>
           <textarea
-            aria-errormessage={
+            aria-describedby={
               actionData?.errors?.body ? 'body-error' : undefined
             }
             aria-invalid={actionData?.errors?.body ? true : undefined}
@@ -102,11 +98,7 @@ export default function NewNotePage() {
           />
         </label>
         {actionData?.errors?.body && (
-          <div
-            aria-live="assertive"
-            className="pt-1 text-red-700"
-            id="body-error"
-          >
+          <div className="pt-1 text-red-700" id="body-error">
             {actionData.errors.body}
           </div>
         )}
