@@ -67,6 +67,9 @@ export default function NewNotePage() {
         <label className="flex w-full flex-col gap-1">
           <span>Title: </span>
           <input
+            aria-describedby={
+              actionData?.errors?.title ? 'title-error' : undefined
+            }
             aria-errormessage={
               actionData?.errors?.title ? 'title-error' : undefined
             }
@@ -87,6 +90,9 @@ export default function NewNotePage() {
         <label className="flex w-full flex-col gap-1">
           <span>Body: </span>
           <textarea
+            aria-describedby={
+              actionData?.errors?.body ? 'body-error' : undefined
+            }
             aria-errormessage={
               actionData?.errors?.body ? 'body-error' : undefined
             }
@@ -106,7 +112,7 @@ export default function NewNotePage() {
 
       <div className="text-right">
         <button
-          className="rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
+          className="rounded bg-blue-700  py-2 px-4 text-white hover:bg-blue-800 focus:bg-blue-400"
           type="submit"
         >
           Save

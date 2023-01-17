@@ -90,3 +90,27 @@ jobs:
 
       - name: ⌨️ Validate no pending codegen
         run: npm run codegen -- --check
+
+  storybook:
+    name: 📚 Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⛔ Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 😻 Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.node-version'
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+
+      - name: 📚 Build storybook
+        run: npm run build:storybook
+
+      - name: 📚 Accessibility tests
+        run: npm run test:storybook:axeOnly
