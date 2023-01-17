@@ -70,6 +70,9 @@ export default function NewNotePage() {
             aria-describedby={
               actionData?.errors?.title ? 'title-error' : undefined
             }
+            aria-errormessage={
+              actionData?.errors?.title ? 'title-error' : undefined
+            }
             aria-invalid={actionData?.errors?.title ? true : undefined}
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
             name="title"
@@ -89,6 +92,9 @@ export default function NewNotePage() {
           <textarea
             aria-describedby={
               actionData?.errors?.body ? 'body-error' : undefined
+            }
+            aria-errormessage={
+              actionData?.errors?.title ? 'body-error' : undefined
             }
             aria-invalid={actionData?.errors?.body ? true : undefined}
             className="w-full flex-1 rounded-md border-2 border-blue-500 py-2 px-3 text-lg leading-6"
