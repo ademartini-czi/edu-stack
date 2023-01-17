@@ -94,7 +94,7 @@ export default function NewNotePage() {
               actionData?.errors?.body ? 'body-error' : undefined
             }
             aria-errormessage={
-              actionData?.errors?.title ? 'body-error' : undefined
+              actionData?.errors?.body ? 'body-error' : undefined
             }
             aria-invalid={actionData?.errors?.body ? true : undefined}
             className="w-full flex-1 rounded-md border-2 border-blue-500 py-2 px-3 text-lg leading-6"
