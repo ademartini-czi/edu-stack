@@ -12,11 +12,12 @@ const loader = () => ({
 
 export default {
   component: NoteDetailsPage,
+} as Meta;
+
+export const Default: StoryObj = {
   render: () => (
     <RemixStub loader={loader}>
       <NoteDetailsPage />
     </RemixStub>
   ),
-} as Meta;
-
-export const Default: StoryObj = {};
+};

@@ -1,6 +1,6 @@
 import {RemixContext} from '@remix-run/react/dist/components';
 import type {RemixContextObject} from '@remix-run/react/dist/entry';
-import * as React from 'react';
+import type {ReactElement} from 'react';
 
 // We are intentionally ignoring this eslint error because we want
 // to use the version of react-router-dom that @remix-run/react depends on.
@@ -9,7 +9,7 @@ import {createMemoryRouter, RouterProvider} from 'react-router-dom';
 import type {RouteObject} from 'react-router-dom';
 
 type Props = {
-  children: React.ReactElement;
+  children: ReactElement;
   /**
    * A function to provide data to the route element before it renders.
    * @see https://remix.run/docs/en/v1/route/loader for more information.
@@ -69,11 +69,9 @@ export default function RemixStub(props: Props) {
   const router = createMemoryRouter([route]);
 
   return (
-    <React.StrictMode>
-      <RemixContext.Provider value={context}>
-        <RouterProvider router={router} />
-      </RemixContext.Provider>
-    </React.StrictMode>
+    <RemixContext.Provider value={context}>
+      <RouterProvider router={router} />
+    </RemixContext.Provider>
   );
 }
 
@@ -83,7 +81,7 @@ export default function RemixStub(props: Props) {
  * Inspired by how `@remix-run/react` tests their components:
  *  https://github.com/remix-run/remix/blob/main/packages/remix-react/__tests__/components-test.tsx#L80-L98
  */
-function createRemixContext(route: RouteObject) {
+function createRemixContext(route: RouteObject): RemixContextObject {
   return {
     routeModules: {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -112,5 +110,5 @@ function createRemixContext(route: RouteObject) {
       unstable_cssModules: true,
       unstable_cssSideEffectImports: true,
     },
-  } as RemixContextObject;
+  };
 }
