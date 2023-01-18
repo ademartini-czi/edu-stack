@@ -22,15 +22,6 @@ const config: StorybookConfig = {
         '~': path.resolve(__dirname, '../app'),
         tests: path.resolve(__dirname, '../tests'),
       },
-
-      fallback: {
-        ...theirConfig.resolve?.fallback,
-        // Ignore some node modules coming from @remix-run/node. Maybe we can configure Webpack to
-        // completely ignore this package?
-        os: false,
-        fs: false,
-        stream: false,
-      },
     };
 
     theirConfig.module = {
@@ -38,6 +29,12 @@ const config: StorybookConfig = {
 
       rules: [
         ...(theirConfig.module?.rules || []),
+        // Replace @remix-run/node with an empty file, so that its node dependencies aren't loaded.
+        // It should never be used by browser code.
+        {
+          test: require.resolve('@remix-run/node'),
+          use: 'null-loader',
+        },
         // Replace `.server.ts` files with an empty file. Remix will never send these to the
         // browser.
         {
