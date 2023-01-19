@@ -6,6 +6,7 @@ module.exports = {
   ignoredRouteFiles: [
     '**/.*',
     '**/*.css',
+    '**/*.spec.{js,jsx,ts,tsx}',
     '**/*.stories.{js,jsx,ts,tsx}',
     '**/*.test.{js,jsx,ts,tsx}',
   ],
