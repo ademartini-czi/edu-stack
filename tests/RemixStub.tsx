@@ -106,9 +106,11 @@ function createRemixContext(route: RouteObject): RemixContextObject {
       version: '',
     },
     future: {
-      v2_meta: false,
       unstable_cssModules: true,
       unstable_cssSideEffectImports: true,
+      unstable_vanillaExtract: false,
+      v2_errorBoundary: false,
+      v2_meta: false,
     },
   };
 }
