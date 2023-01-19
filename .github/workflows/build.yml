@@ -110,7 +110,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: 📚 Build storybook
-        run: npm run build:storybook
+        run: npm run storybook:build
 
       - name: 📚 Accessibility tests
         run: npm run test:storybook:axeOnly
