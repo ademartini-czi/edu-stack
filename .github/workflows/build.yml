@@ -100,6 +100,9 @@ jobs:
 
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
+        # Un-comment this entire block if you're using Chromatic
+        # with:
+        #   fetch-depth: 0
 
       - name: 😻 Setup node
         uses: actions/setup-node@v3
@@ -117,8 +120,9 @@ jobs:
 
       # # To use Chromatic for [visual regression testing](https://czi.atlassian.net/wiki/x/SYCFiw):
       # # 1. Un-comment this entire block.
-      # # 2. Create a new project in Chromatic per https://www.chromatic.com/docs/setup#sign-up.
-      # # 3. Add its unique project token to GitHub as a `CHROMATIC_PROJECT_TOKEN` secret.
+      # # 2. Un-comment the block above in the "Checkout repo" step
+      # # 3. Create a new project in Chromatic per https://www.chromatic.com/docs/setup#sign-up.
+      # # 4. Add its unique project token to GitHub as a `CHROMATIC_PROJECT_TOKEN` secret.
       # - name: 🌈 Publish to Chromatic
       #   uses: chromaui/action@v1
       #   with:
