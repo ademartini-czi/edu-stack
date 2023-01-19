@@ -112,7 +112,7 @@ jobs:
       - name: 📚 Build storybook
         run: npm run storybook:build
 
-      - name: 📚 Accessibility tests
+      - name: 🤟 Accessibility tests
         run: npm run test:storybook:axeOnly
 
       # # To use Chromatic for [visual regression testing](https://czi.atlassian.net/wiki/x/SYCFiw):
