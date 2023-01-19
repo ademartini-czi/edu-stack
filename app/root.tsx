@@ -15,6 +15,7 @@ import tailwindStylesheetUrl from './styles/tailwind.css';
 
 export const links: LinksFunction = () => {
   return [
+    {rel: 'apple-touch-icon', href: '/favicon.ico'},
     {rel: 'stylesheet', href: tailwindStylesheetUrl},
     {rel: 'stylesheet', href: edsVariablesUrl},
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
