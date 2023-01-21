@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const fs = require('fs/promises');
 const path = require('path');
-
 const PackageJson = require('@npmcli/package-json');
 
 const escapeRegExp = (string) =>
@@ -54,11 +53,9 @@ const main = async ({isTypeScript, packageManager, rootDirectory}) => {
   const DOCKERFILE_PATH = path.join(rootDirectory, 'Dockerfile');
 
   const REPLACER = 'blues-stack-template';
-
   const DIR_NAME = path.basename(rootDirectory);
-  const SUFFIX = getRandomString(2);
 
-  const APP_NAME = (DIR_NAME + '-' + SUFFIX)
+  const APP_NAME = DIR_NAME
     // get rid of anything that's not allowed in an app name
     .replace(/[^a-zA-Z0-9-_]/g, '-');
 
