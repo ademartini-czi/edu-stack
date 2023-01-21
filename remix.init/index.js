@@ -3,7 +3,11 @@ const fs = require('fs/promises');
 const path = require('path');
 const PackageJson = require('@npmcli/package-json');
 
-const main = async ({isTypeScript, packageManager, rootDirectory}) => {
+module.exports = async function main({
+  isTypeScript,
+  packageManager,
+  rootDirectory,
+}) {
   if (!isTypeScript) {
     console.warn(
       "I see you've asked for TypeScript to be removed from the project 🧐. That option is not supported, and the project will still be generated with TypeScript.",
@@ -79,13 +83,14 @@ Setup is almost complete. Follow these steps to finish initialization:
   );
 };
 
-const escapeRegExp = (string) =>
+function escapeRegExp(string) {
   // $& means the whole matched string
-  string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
-const getPackageManagerCommand = (packageManager) =>
+function getPackageManagerCommand(packageManager) {
   // Inspired by https://github.com/nrwl/nx/blob/bd9b33eaef0393d01f747ea9a2ac5d2ca1fb87c6/packages/nx/src/utils/package-manager.ts#L38-L103
-  ({
+  const commands = {
     npm: () => ({
       exec: 'npx',
       lockfile: 'package-lock.json',
@@ -99,11 +104,15 @@ const getPackageManagerCommand = (packageManager) =>
       lockfile: 'yarn.lock',
       run: (script, args) => `yarn ${script} ${args || ''}`,
     }),
-  }[packageManager]());
+  };
+  return commands[packageManager]();
+}
 
-const getRandomString = (length) => crypto.randomBytes(length).toString('hex');
+function getRandomString(length) {
+  return crypto.randomBytes(length).toString('hex');
+}
 
-const updatePackageJson = ({APP_NAME, packageJson}) => {
+function updatePackageJson({APP_NAME, packageJson}) {
   const {
     scripts: {types, validate, ...scripts},
   } = packageJson.content;
@@ -112,6 +121,4 @@ const updatePackageJson = ({APP_NAME, packageJson}) => {
     name: APP_NAME,
     scripts: {...scripts, types, validate},
   });
-};
-
-module.exports = main;
+}
