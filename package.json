@@ -2,9 +2,6 @@
   "name": "edu-stack-template",
   "private": true,
   "sideEffects": false,
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
     "build": "run-s build:*",
     "build:css": "npm run generate:css -- --minify",
@@ -114,5 +111,8 @@
     "vite": "^4.0.4",
     "vite-tsconfig-paths": "^4.0.3",
     "vitest": "^0.27.2"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
