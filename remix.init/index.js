@@ -47,7 +47,7 @@ module.exports = async function main({
 
   const newDockerfile = pm.lockfile
     ? dockerfile.replace(
-        new RegExp(escapeRegExp('ADD package.json'), 'g'),
+        new RegExp(escapeRegExp('ADD package.json package-lock.json'), 'g'),
         `ADD package.json ${pm.lockfile}`,
       )
     : dockerfile;
