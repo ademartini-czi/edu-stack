@@ -50,8 +50,8 @@ module.exports = async function main({
   const newReadme = readme.replace('# Remix Edu Stack', `# ${APP_NAME}`);
 
   const newDockerfile = pm.lockfile
-    ? dockerfile.replace(
-        new RegExp(escapeRegExp('ADD package.json package-lock.json'), 'g'),
+    ? dockerfile.replaceAll(
+        'ADD package.json package-lock.json',
         `ADD package.json ${pm.lockfile}`,
       )
     : dockerfile;
@@ -86,20 +86,6 @@ module.exports = async function main({
     `,
   );
 };
-
-/**
- * Escape characters with special meaning in regular expressions, by prepending `\\` to them.
- *
- * @example
- * escapeRegExp('hi.there');
- * // => "hi\\.there"
- *
- * @param {string} string
- */
-function escapeRegExp(string) {
-  // $& means the whole matched string
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
 
 /**
  * Figure out where the package manager's lockfile is, what it's "exec" command is, etc.
