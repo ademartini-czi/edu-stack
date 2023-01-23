@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@npmcli/package-json": "^2.0.0"
+    "@npmcli/package-json": "^2.0.0",
+    "ts-dedent": "^2.2.0"
   }
 }

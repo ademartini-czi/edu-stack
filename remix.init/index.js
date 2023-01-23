@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const fs = require('fs/promises');
 const path = require('path');
 const PackageJson = require('@npmcli/package-json');
+const {dedent} = require('ts-dedent');
 
 /**
  * Prepare the generated repo for development by doing things like:
@@ -79,15 +80,15 @@ module.exports = async function main({
   await Promise.all(fileOperationPromises);
 
   console.log(
-    `
-Setup is almost complete. Follow these steps to finish initialization:
+    dedent`
+      Setup is almost complete. Follow these steps to finish initialization:
 
-- Run the first build (this generates the server you will run):
-  ${pm.run('build')}
+      - Run the first build (this generates the server you will run):
+        ${pm.run('build')}
 
-- You're now ready to rock and roll 🤘
-  ${pm.run('dev')}
-    `.trim(),
+      - You're now ready to rock and roll 🤘
+        ${pm.run('dev')}
+    `,
   );
 };
 
