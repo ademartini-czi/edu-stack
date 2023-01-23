@@ -22,7 +22,7 @@ module.exports = async function main({
     );
   }
 
-  const pm = getPackageManagerCommand(packageManager);
+  const pm = getPackageManagerInfo(packageManager);
 
   const README_PATH = path.join(rootDirectory, 'README.md');
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, '.env.example');
@@ -106,26 +106,32 @@ function escapeRegExp(string) {
 }
 
 /**
- * @param {'npm' | 'pnpm' | 'yarn'} packageManager
+ * Figure out where the package manager's lockfile is, what it's "exec" command is, etc.
+ *
+ * @param {'npm' | 'yarn'} packageManager
  */
-function getPackageManagerCommand(packageManager) {
+function getPackageManagerInfo(packageManager) {
   // Inspired by https://github.com/nrwl/nx/blob/bd9b33eaef0393d01f747ea9a2ac5d2ca1fb87c6/packages/nx/src/utils/package-manager.ts#L38-L103
   const commands = {
-    npm: () => ({
+    npm: {
       exec: 'npx',
       lockfile: 'package-lock.json',
       run: (script, args) => `npm run ${script} ${args ? `-- ${args}` : ''}`,
-    }),
-    pnpm: () => {
-      throw new Error('pnpm not supported');
     },
-    yarn: () => ({
+    yarn: {
       exec: 'yarn',
       lockfile: 'yarn.lock',
       run: (script, args) => `yarn ${script} ${args || ''}`,
-    }),
+    },
   };
-  return commands[packageManager]();
+
+  const commandsForPackageManager = commands[packageManager];
+
+  if (!commandsForPackageManager) {
+    throw new Error(`Package manager "${packageManager}" is not supported`);
+  }
+
+  return commandsForPackageManager;
 }
 
 function getRandomString(length) {
