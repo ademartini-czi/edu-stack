@@ -3,6 +3,14 @@ const fs = require('fs/promises');
 const path = require('path');
 const PackageJson = require('@npmcli/package-json');
 
+/**
+ * Prepare the generated repo for development by doing things like:
+ * - Replacing "edu-stack" in various files with the app's actual name
+ * - Changing commands to use `npm` or `yarn` (whichever was used to generate the repo)
+ * - etc.
+ *
+ * @param {{isTypeScript: boolean, packageManager: string, rootDirectory: string}} param0
+ */
 module.exports = async function main({
   isTypeScript,
   packageManager,
@@ -83,11 +91,23 @@ Setup is almost complete. Follow these steps to finish initialization:
   );
 };
 
+/**
+ * Escape characters with special meaning in regular expressions, by prepending `\\` to them.
+ *
+ * @example
+ * escapeRegExp('hi.there');
+ * // => "hi\\.there"
+ *
+ * @param {string} string
+ */
 function escapeRegExp(string) {
   // $& means the whole matched string
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/**
+ * @param {'npm' | 'pnpm' | 'yarn'} packageManager
+ */
 function getPackageManagerCommand(packageManager) {
   // Inspired by https://github.com/nrwl/nx/blob/bd9b33eaef0393d01f747ea9a2ac5d2ca1fb87c6/packages/nx/src/utils/package-manager.ts#L38-L103
   const commands = {
