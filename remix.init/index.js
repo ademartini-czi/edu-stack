@@ -29,8 +29,6 @@ module.exports = async function main({
   const EXAMPLE_ENV_PATH = path.join(rootDirectory, '.env.example');
   const ENV_PATH = path.join(rootDirectory, '.env');
   const DOCKERFILE_PATH = path.join(rootDirectory, 'Dockerfile');
-
-  const REPLACER = 'blues-stack-template';
   const DIR_NAME = path.basename(rootDirectory);
 
   const APP_NAME = DIR_NAME
@@ -49,10 +47,7 @@ module.exports = async function main({
     `SESSION_SECRET="${getRandomString(16)}"`,
   );
 
-  const newReadme = readme.replace(
-    new RegExp(escapeRegExp(REPLACER), 'g'),
-    APP_NAME,
-  );
+  const newReadme = readme.replace('# Remix Edu Stack', `# ${APP_NAME}`);
 
   const newDockerfile = pm.lockfile
     ? dockerfile.replace(
