@@ -1,6 +1,6 @@
 import {RemixContext} from '@remix-run/react/dist/components';
 import type {RemixContextObject} from '@remix-run/react/dist/entry';
-import type {ReactElement} from 'react';
+import {StrictMode, type ReactElement} from 'react';
 
 // We are intentionally ignoring this eslint error because we want
 // to use the version of react-router-dom that @remix-run/react depends on.
@@ -69,9 +69,11 @@ export default function RemixStub(props: Props) {
   const router = createMemoryRouter([route]);
 
   return (
-    <RemixContext.Provider value={context}>
-      <RouterProvider router={router} />
-    </RemixContext.Provider>
+    <StrictMode>
+      <RemixContext.Provider value={context}>
+        <RouterProvider router={router} />
+      </RemixContext.Provider>
+    </StrictMode>
   );
 }
 
