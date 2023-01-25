@@ -27,7 +27,7 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
 - Query external services with [GraphQL](https://graphql.org/)
 - Static Types with [TypeScript](https://typescriptlang.org)
 - Styling with [Tailwind](https://tailwindcss.com/)
-- Unit testing with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com)
+- Unit testing with [Jest](https://jestjs.io/) and [Testing Library](https://testing-library.com)
 
 ## Requirements
 
