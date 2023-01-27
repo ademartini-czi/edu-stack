@@ -13,6 +13,6 @@ export default {
   roots: ['<rootDir>/app'],
   preset: 'ts-jest',
   setupFilesAfterEnv: ['<rootDir>/tests/setup-test-env.ts'],
-  testEnvironment: '@happy-dom/jest-environment',
+  testEnvironment: 'jsdom',
   watchPathIgnorePatterns: ['.*\\/node_modules\\/.*', '.*\\/build\\/.*'],
 };
