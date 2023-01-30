@@ -1,6 +1,6 @@
 import edsVariablesUrl from '@chanzuckerberg/eds/lib/tokens/css/variables.css';
 import {cssBundleHref} from '@remix-run/css-bundle';
-import type {LinksFunction, LoaderArgs, MetaFunction} from '@remix-run/node';
+import type {LinksFunction, LoaderArgs} from '@remix-run/node';
 import {json} from '@remix-run/node';
 import {
   Links,
