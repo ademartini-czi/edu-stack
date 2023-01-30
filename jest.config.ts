@@ -14,7 +14,7 @@ const config: JestConfigWithTsJest = {
   resetMocks: true,
   roots: ['<rootDir>/app'],
   preset: 'ts-jest',
-  setupFilesAfterEnv: ['<rootDir>/tests/setup-test-env.ts'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     // Ensure we get CJS builds of packages with conditional exports, not ESM or browser builds.
