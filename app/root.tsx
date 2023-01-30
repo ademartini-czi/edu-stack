@@ -1,6 +1,6 @@
 import edsVariablesUrl from '@chanzuckerberg/eds/lib/tokens/css/variables.css';
 import {cssBundleHref} from '@remix-run/css-bundle';
-import type {LinksFunction, LoaderArgs} from '@remix-run/node';
+import type {LinksFunction, LoaderArgs, MetaFunction} from '@remix-run/node';
 import {json} from '@remix-run/node';
 import {
   Links,
@@ -23,6 +23,10 @@ export const links: LinksFunction = () => {
   ];
 };
 
+export const meta: MetaFunction = () => ({
+  title: 'Edu App',
+});
+
 export async function loader({request}: LoaderArgs) {
   return json({
     user: await getUser(request),
@@ -33,7 +37,6 @@ export default function App() {
   return (
     <html className="h-full" lang="en">
       <head>
-        <title>Edu App</title>
         <meta charSet="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <Meta />
