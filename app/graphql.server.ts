@@ -1,5 +1,8 @@
 import {GraphQLClient} from 'graphql-request';
+import invariant from 'tiny-invariant';
 
 export {graphql as gql} from '~/gql';
 
-export const graphql = new GraphQLClient('https://example.com');
+invariant(process.env.GRAPHQL_URL, 'GRAPHQL_URL must be set');
+
+export const graphql = new GraphQLClient(process.env.GRAPHQL_URL);

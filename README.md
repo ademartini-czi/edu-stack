@@ -50,7 +50,7 @@ npx create-remix@latest --template chanzuckerberg/edu-stack
 - Create `.env` file for local development
 
   ```sh
-  cp .env.example .env && sed -i '' -e "s/super-duper-s3cret/$(openssl rand -base64 16)/" .env
+  cp .env.example .env && sed -i '' -e "s/super-duper-s3cret/$(openssl rand -base64 16)/g" .env
   ```
 
   *Note: this uses `sed` and `openssl` to generate a unique secret token for development. Doing so doesn't really matter, but it's nice to validate that the app works with different tokens.*
