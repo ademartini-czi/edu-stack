@@ -1,4 +1,5 @@
 import edsVariablesUrl from '@chanzuckerberg/eds/lib/tokens/css/variables.css';
+import edsFontsUrl from '@chanzuckerberg/eds/lib/tokens/fonts.css';
 import {cssBundleHref} from '@remix-run/css-bundle';
 import type {LinksFunction, LoaderArgs, MetaFunction} from '@remix-run/node';
 import {json} from '@remix-run/node';
@@ -18,6 +19,7 @@ export const links: LinksFunction = () => {
     {rel: 'apple-touch-icon', href: '/favicon.ico'},
     {rel: 'stylesheet', href: tailwindStylesheetUrl},
     {rel: 'stylesheet', href: edsVariablesUrl},
+    {rel: 'stylesheet', href: edsFontsUrl},
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     {rel: 'stylesheet', href: cssBundleHref!},
   ];
