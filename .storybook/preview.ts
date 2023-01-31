@@ -1,6 +1,9 @@
 import type {Parameters} from '@storybook/react';
 import '../app/styles/tailwind.css';
 
+import '@chanzuckerberg/eds/lib/tokens/css/variables.css';
+import '@chanzuckerberg/eds/lib/tokens/fonts.css';
+
 export const parameters: Parameters = {
   /**
    * Explicitly set Storybook's background to light because if developers

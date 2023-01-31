@@ -26,9 +26,7 @@ export const links: LinksFunction = () => {
 };
 
 export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
   title: 'Edu App',
-  viewport: 'width=device-width,initial-scale=1',
 });
 
 export async function loader({request}: LoaderArgs) {
@@ -41,6 +39,8 @@ export default function App() {
   return (
     <html className="h-full" lang="en">
       <head>
+        <meta charSet="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <Meta />
         <Links />
       </head>
