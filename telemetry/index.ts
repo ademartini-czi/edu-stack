@@ -5,9 +5,10 @@ import {registerInstrumentations} from '@opentelemetry/instrumentation';
 import {ExpressInstrumentation} from '@opentelemetry/instrumentation-express';
 import {HttpInstrumentation} from '@opentelemetry/instrumentation-http';
 import {Resource} from '@opentelemetry/resources';
-import {SimpleSpanProcessor} from '@opentelemetry/sdk-trace-base';
+import {ConsoleSpanExporter, SimpleSpanProcessor} from '@opentelemetry/sdk-trace-base';
 import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
 import {SemanticResourceAttributes} from '@opentelemetry/semantic-conventions';
+import {ConsoleMetricExporter} from '@opentelemetry/sdk-metrics';
 
 import pkg from 'package.json';
 
@@ -26,6 +27,13 @@ export default {
     });
 
     provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+
+    if (process.env.NODE_ENV === 'development') {
+      provider.addSpanProcessor(
+        new SimpleSpanProcessor(new ConsoleSpanExporter()),
+      );
+    }
+
     provider.register();
 
     //This is terrible, we need a better solution.  The socket is null on mocked
