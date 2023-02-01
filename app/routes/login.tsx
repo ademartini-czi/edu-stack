@@ -6,6 +6,7 @@ import * as React from 'react';
 import {verifyLogin} from '~/models/user.server';
 import {createUserSession, getUserId} from '~/session.server';
 import {safeRedirect, validateEmail} from '~/utils';
+import Telemetry from '../../telemetry';
 
 export async function loader({request}: LoaderArgs) {
   const userId = await getUserId(request);
@@ -44,6 +45,7 @@ export async function action({request}: ActionArgs) {
   const user = await verifyLogin(email, password);
 
   if (!user) {
+    Telemetry.counters.failedLogins.add(1); //Example metric
     return json(
       {errors: {email: 'Invalid email or password', password: null}},
       {status: 400},
