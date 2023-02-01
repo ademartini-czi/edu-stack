@@ -3,6 +3,9 @@ import {createRequestHandler} from '@remix-run/express';
 import compression from 'compression';
 import express from 'express';
 import morgan from 'morgan';
+import telemetry from 'telemetry';
+
+telemetry.setup();
 
 const app = express();
 
